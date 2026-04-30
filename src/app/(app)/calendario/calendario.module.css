@@ -1,0 +1,65 @@
+.calHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.calMonth {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calDayHeader {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+.calDay {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  cursor: default;
+  position: relative;
+  gap: 3px;
+}
+
+.calDay:hover {
+  background: var(--bg-hover);
+}
+
+.calDay.today {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid var(--accent-blue);
+}
+
+.calDay.hasTask .dayNum {
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+.dayNum {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.taskDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}

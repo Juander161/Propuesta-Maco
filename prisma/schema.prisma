@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("EMPLOYEE")
+  orders    Order[]
+  tasks     Task[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id           String   @id @default(cuid())
+  externalId   String   @unique
+  customer     String
+  status       String   @default("PENDIENTE")
+  priority     String   @default("NORMAL")
+  ownerId      String?
+  owner        User?    @relation(fields: [ownerId], references: [id])
+  shortage     Boolean  @default(false)
+  backorder    Boolean  @default(false)
+  product      String   @default("")
+  quantity     Int      @default(0)
+  region       String   @default("")
+  notes        String?
+  source       String   @default("OPEN_DELIVERY")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AssignmentRule {
+  id        String   @id @default(cuid())
+  name      String
+  field     String
+  operator  String
+  value     String
+  assignTo  String
+  priority  Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime
+  reminder    DateTime?
+  completed   Boolean   @default(false)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  orderId     String?
+  emailAlert  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String
+  userId    String
+  details   String?
+  createdAt DateTime @default(now())
+}
