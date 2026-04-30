@@ -1,13 +1,157 @@
-.filters {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+.lastSync {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
-.count {
-  margin-left: auto;
+.panelTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inboxPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.emailList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emailItem {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #FAFAFB;
+  transition: background 0.2s;
+}
+
+.emailItem:hover {
+  background: var(--primary-light);
+  border-color: var(--primary-mid);
+}
+
+.emailIcon {
+  font-size: 20px;
+  margin-right: 12px;
+}
+
+.emailContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.emailSubject {
   font-size: 13px;
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.emailSender {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.emailTime {
+  font-size: 11px;
+  color: var(--text-secondary);
   font-weight: 500;
+}
+
+.verticalDivider {
+  width: 1px;
+  background: var(--border-color);
+  height: 100%;
+}
+
+.stepperPanel {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding: 0 20px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.stepCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #E2E3E5;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  border: 3px solid var(--bg-surface);
+  transition: all 0.3s;
+}
+
+.stepLabel {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.stepActive .stepCircle {
+  background: var(--success);
+  color: #fff;
+}
+
+.stepActive .stepLabel {
+  color: var(--primary-dark);
+}
+
+.stepLine {
+  flex: 1;
+  height: 3px;
+  background: #E2E3E5;
+  margin: 0 -10px;
+  margin-bottom: 24px; /* offset to align with circle center */
+  position: relative;
+  z-index: 1;
+  transition: background 0.3s;
+}
+
+.stepLine[data-active="true"] {
+  background: var(--success);
+}
+
+.processingStatus {
+  margin-top: auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--primary-mid);
+  font-weight: 500;
+  background: var(--primary-light);
+  padding: 10px;
+  border-radius: 6px;
 }

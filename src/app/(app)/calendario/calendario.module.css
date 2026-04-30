@@ -1,65 +1,75 @@
-.calHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.calMonth {
-  font-size: 18px;
-  font-weight: 700;
-}
-
 .calGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  border-top: 1px solid var(--border-color);
+  border-left: 1px solid var(--border-color);
+  flex: 1;
 }
 
 .calDayHeader {
+  padding: 10px;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--text-muted);
-  padding: 8px 0;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  background: #FAFAFB;
   text-transform: uppercase;
 }
 
-.calDay {
-  aspect-ratio: 1;
+.calCell {
+  min-height: 80px;
+  padding: 8px;
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 8px;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
-  cursor: default;
-  position: relative;
-  gap: 3px;
+  transition: background 0.2s;
 }
 
-.calDay:hover {
-  background: var(--bg-hover);
+.calCell:hover {
+  background: #F4F6F9;
 }
 
-.calDay.today {
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid var(--accent-blue);
+.calCellDim {
+  background: #FAFAFB;
+}
+.calCellDim .calDateNum {
+  color: #adb5bd;
 }
 
-.calDay.hasTask .dayNum {
+.calCellToday {
+  background: var(--primary-light);
+}
+.calCellToday .calDateNum {
+  color: var(--primary-dark);
   font-weight: 700;
-  color: var(--accent-blue);
 }
 
-.dayNum {
+.calDateNum {
   font-size: 13px;
-  color: var(--text-secondary);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
 }
 
-.taskDot {
+.calDots {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.dotAlert {
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  background: var(--danger);
+}
+
+.dotSuccess {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary-mid);
 }

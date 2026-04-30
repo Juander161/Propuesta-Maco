@@ -1,183 +1,123 @@
 .sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
   width: var(--sidebar-width);
-  background: var(--bg-secondary);
+  height: calc(100vh - var(--navbar-height));
+  background: #fff;
   border-right: 1px solid var(--border-color);
+  padding: 16px 0;
   display: flex;
   flex-direction: column;
-  transition: width var(--transition-base);
-  z-index: 100;
-  overflow: hidden;
+  transition: width 0.3s ease;
+  overflow-y: auto;
 }
 
-.sidebar.collapsed {
-  width: var(--sidebar-collapsed);
+.collapsed {
+  width: 70px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px 20px 16px;
-  border-bottom: 1px solid var(--border-color);
+.roleContainer {
+  padding: 0 16px;
+  margin-bottom: 20px;
 }
 
-.logoIcon {
-  font-size: 24px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-md);
-  flex-shrink: 0;
-}
-
-.logoText {
-  font-size: 18px;
-  font-weight: 800;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.roleBadge {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
-.toggle {
-  position: absolute;
-  top: 22px;
-  right: -12px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  z-index: 10;
-  transition: all var(--transition-fast);
-}
-
-.toggle:hover {
-  background: var(--accent-blue);
-  color: white;
-  border-color: var(--accent-blue);
+.collapsed .roleBadge {
+  padding: 4px;
+  text-align: center;
+  width: 100%;
 }
 
 .nav {
   flex: 1;
-  padding: 16px 12px;
-  overflow-y: auto;
 }
 
 .navSection {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .sectionLabel {
-  display: block;
-  font-size: 11px;
+  color: var(--text-secondary);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  padding: 0 8px;
-  margin-bottom: 8px;
+  letter-spacing: 1px;
+  padding: 0 16px;
+  margin-bottom: 6px;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
+  height: 40px;
+  padding: 0 16px;
+  gap: 10px;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all var(--transition-fast);
-  margin-bottom: 2px;
+  color: var(--text-primary);
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
 }
 
 .navItem:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+  background: #FAFAFB;
 }
 
 .navItem.active {
-  background: rgba(59, 130, 246, 0.12);
-  color: var(--accent-blue);
-}
-
-.navItem.active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 24px;
-  background: var(--accent-blue);
-  border-radius: 0 3px 3px 0;
+  background: var(--primary-light);
+  border-left-color: var(--primary-mid);
 }
 
 .navIcon {
-  font-size: 18px;
-  width: 24px;
+  font-size: 16px;
+  width: 20px;
   text-align: center;
-  flex-shrink: 0;
 }
 
 .navLabel {
-  white-space: nowrap;
-}
-
-.userCard {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  border-top: 1px solid var(--border-color);
-  margin-top: auto;
-}
-
-.userAvatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-  color: white;
-  flex-shrink: 0;
-}
-
-.userInfo {
-  overflow: hidden;
-}
-
-.userName {
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.userRole {
+.footer {
+  border-top: 1px solid var(--border-color);
+  padding: 12px 16px;
+  margin-top: auto;
+}
+
+.version {
+  color: var(--text-secondary);
   font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+.logoutBtn:hover {
+  text-decoration: underline;
 }

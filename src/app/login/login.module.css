@@ -1,148 +1,311 @@
-.container {
-  min-height: 100vh;
+.splitLayout {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.leftHalf {
+  flex: 1;
+  background: var(--primary-dark);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background: var(--bg-primary);
 }
 
-.bgOrbs { position: absolute; inset: 0; pointer-events: none; }
-
-.orb1, .orb2, .orb3 {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.3;
-}
-
-.orb1 {
-  width: 400px; height: 400px;
-  background: var(--accent-blue);
-  top: -100px; left: -100px;
-  animation: float1 8s ease-in-out infinite;
-}
-
-.orb2 {
-  width: 350px; height: 350px;
-  background: var(--accent-purple);
-  bottom: -80px; right: -80px;
-  animation: float2 10s ease-in-out infinite;
-}
-
-.orb3 {
-  width: 250px; height: 250px;
-  background: var(--accent-cyan);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  animation: float3 12s ease-in-out infinite;
-}
-
-@keyframes float1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(40px, 30px); } }
-@keyframes float2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-30px, -40px); } }
-@keyframes float3 { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.2); } }
-
-.card {
-  background: rgba(17, 24, 39, 0.8);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  padding: 48px 40px;
-  width: 100%;
-  max-width: 420px;
-  position: relative;
-  z-index: 1;
-  box-shadow: var(--shadow-lg);
-}
-
-.logoSection {
+.branding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-bottom: 36px;
 }
 
-.logoIcon {
-  width: 56px; height: 56px;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-lg);
-  display: inline-flex;
+.logoBox {
+  width: 72px;
+  height: 72px;
+  background: #fff;
+  border-radius: 12px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  margin-bottom: 24px;
 }
 
-.title {
-  font-size: 28px;
+.logoBox span {
+  color: var(--primary-mid);
+  font-size: 32px;
   font-weight: 800;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
-.subtitle {
+.appName {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.tagline {
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.75;
+  max-width: 320px;
+  margin-top: 8px;
+}
+
+.decorativeLines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 48px;
+}
+
+.decorativeLines div {
+  height: 2px;
+  background: var(--primary-mid);
+  opacity: 0.4;
+}
+
+.versionLabel {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  color: #fff;
+  font-size: 11px;
+  opacity: 0.4;
+}
+
+.rightHalf {
+  flex: 1;
+  background: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.loginCard {
+  width: 480px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 48px;
+  z-index: 10;
+}
+
+.sectionLabel {
+  color: var(--primary-mid);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.cardTitle {
+  color: var(--primary-dark);
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.cardSubtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: var(--border-color);
+  margin: 28px 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputWrapper input {
+  width: 100%;
+  height: 44px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0 40px; /* space for icons */
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputWrapper input:focus {
+  border-color: var(--primary-mid);
+}
+
+.inputIcon {
+  position: absolute;
+  left: 12px;
   font-size: 14px;
   color: var(--text-secondary);
-  margin-top: 4px;
 }
 
-.form { display: flex; flex-direction: column; gap: 20px; }
+.inputIconRight {
+  position: absolute;
+  right: 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
 
-.field { display: flex; flex-direction: column; }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.link {
+  color: var(--primary-mid);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.submitBtn {
+  margin-top: 28px;
+  width: 100%;
+  height: 48px;
+  background: var(--primary-mid);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submitBtn:hover {
+  background: #235c91;
+}
+
+.orDivider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 24px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.orDivider::before, .orDivider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+.orDivider span {
+  padding: 0 10px;
+}
+
+.ssoBtn {
+  margin-top: 16px;
+  width: 100%;
+  height: 44px;
+  background: #fff;
+  border: 1.5px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.ssoBtn:hover {
+  background: #f8f9fa;
+}
+
+.ssoIcon {
+  font-size: 14px;
+  font-weight: 700;
+  color: #00a4ef;
+}
+
+.footerText {
+  position: absolute;
+  bottom: 24px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
 
 .error {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #f87171;
-  padding: 10px 14px;
-  border-radius: var(--radius-md);
+  background: #FFDAD9;
+  color: var(--danger);
+  padding: 10px;
+  border-radius: 4px;
   font-size: 13px;
-}
-
-.loginBtn {
-  width: 100%;
-  justify-content: center;
-  margin-top: 4px;
-  font-size: 15px;
-  padding: 14px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--danger);
 }
 
 .quickAccess {
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-color);
-}
-
-.quickLabel {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-color);
   font-size: 12px;
-  color: var(--text-muted);
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.quickButtons {
-  display: flex;
-  gap: 8px;
-}
-
-.quickBtn {
-  flex: 1;
-  padding: 8px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
   color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 12px;
-  font-family: 'Inter', sans-serif;
-  transition: all var(--transition-fast);
+  text-align: center;
 }
 
-.quickBtn:hover {
-  border-color: var(--accent-blue);
-  color: var(--text-primary);
-  background: var(--bg-hover);
+.quickRow {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.quickRow button {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.quickRow button:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
 }

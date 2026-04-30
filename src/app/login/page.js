@@ -32,66 +32,107 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.bgOrbs}>
-        <div className={styles.orb1}></div>
-        <div className={styles.orb2}></div>
-        <div className={styles.orb3}></div>
-      </div>
-      <div className={styles.card}>
-        <div className={styles.logoSection}>
-          <div className={styles.logoIcon}>⚡</div>
-          <h1 className={styles.title}>LogísticaPro</h1>
-          <p className={styles.subtitle}>Sistema de Gestión de Operaciones</p>
+    <div className={styles.splitLayout}>
+      {/* LEFT HALF */}
+      <div className={styles.leftHalf}>
+        <div className={styles.branding}>
+          <div className={styles.logoBox}>
+            <span>CS</span>
+          </div>
+          <h1 className={styles.appName}>OpsLogistics</h1>
+          <p className={styles.tagline}>
+            Sistema de Gestión y Automatización de Operaciones Logísticas
+          </p>
+          <div className={styles.decorativeLines}>
+            <div style={{ width: '40px' }}></div>
+            <div style={{ width: '60px' }}></div>
+            <div style={{ width: '30px' }}></div>
+          </div>
         </div>
+        <div className={styles.versionLabel}>
+          v1.0.0 — Customer Service Dept.
+        </div>
+      </div>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          {error && <div className={styles.error}>{error}</div>}
+      {/* RIGHT HALF */}
+      <div className={styles.rightHalf}>
+        <div className={styles.loginCard}>
+          <div className={styles.sectionLabel}>BIENVENIDO</div>
+          <h2 className={styles.cardTitle}>Iniciar Sesión</h2>
+          <p className={styles.cardSubtitle}>
+            Ingresa tus credenciales corporativas para continuar.
+          </p>
 
-          <div className={styles.field}>
-            <label className="label" htmlFor="email">Correo electrónico</label>
-            <input
-              id="email"
-              type="email"
-              className="input-field"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="correo@empresa.com"
-              required
-            />
-          </div>
+          <hr className={styles.divider} />
 
-          <div className={styles.field}>
-            <label className="label" htmlFor="password">Contraseña</label>
-            <input
-              id="password"
-              type="password"
-              className="input-field"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
-          </div>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            {error && <div className={styles.error}>{error}</div>}
 
-          <button type="submit" className={`btn btn-primary btn-lg ${styles.loginBtn}`} disabled={loading}>
-            {loading ? <span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }}></span> : 'Iniciar sesión'}
-          </button>
-        </form>
+            <div className={styles.field}>
+              <label htmlFor="email">Usuario / Correo corporativo</label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputIcon}>✉️</span>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="nombre@empresa.com"
+                  required
+                />
+              </div>
+            </div>
 
-        <div className={styles.quickAccess}>
-          <p className={styles.quickLabel}>Acceso rápido (demo)</p>
-          <div className={styles.quickButtons}>
-            <button className={styles.quickBtn} onClick={() => quickLogin({ email: 'admin@logistica.com', password: 'admin123' })}>
-              🛡️ Admin
+            <div className={styles.field} style={{ marginTop: '20px' }}>
+              <label htmlFor="password">Contraseña</label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputIcon}>🔒</span>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+                <span className={styles.inputIconRight}>👁️</span>
+              </div>
+            </div>
+
+            <div className={styles.row}>
+              <label className={styles.checkboxLabel}>
+                <input type="checkbox" /> Recordar sesión
+              </label>
+              <a href="#" className={styles.link}>¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" className={styles.submitBtn} disabled={loading}>
+              {loading ? 'Cargando...' : 'Entrar al Sistema →'}
             </button>
-            <button className={styles.quickBtn} onClick={() => quickLogin({ email: 'gerente@logistica.com', password: 'manager123' })}>
-              📋 Gerente
+
+            <div className={styles.orDivider}>
+              <span>o continúa con</span>
+            </div>
+
+            <button type="button" className={styles.ssoBtn}>
+              <span className={styles.ssoIcon}>MS</span>
+              Iniciar con cuenta Microsoft
             </button>
-            <button className={styles.quickBtn} onClick={() => quickLogin({ email: 'juan@logistica.com', password: 'employee123' })}>
-              👤 Empleado
-            </button>
-          </div>
+
+            {/* Quick access for demo purposes */}
+            <div className={styles.quickAccess}>
+              <p>Accesos rápidos (Demo):</p>
+              <div className={styles.quickRow}>
+                <button type="button" onClick={() => quickLogin({email: 'admin@logistica.com', password: '123'})}>Admin</button>
+                <button type="button" onClick={() => quickLogin({email: 'gerente@logistica.com', password: '123'})}>Gerente</button>
+                <button type="button" onClick={() => quickLogin({email: 'ana@logistica.com', password: '123'})}>Empleado</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+        <div className={styles.footerText}>
+          Acceso restringido a personal autorizado.
         </div>
       </div>
     </div>

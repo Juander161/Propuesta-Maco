@@ -1,161 +1,149 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { MOCK_ORDERS, MOCK_KPIS } from '@/lib/mockData';
 import styles from './dashboard.module.css';
 
-const STATUS_COLORS = {
-  'PENDIENTE': '#f59e0b', 'EN_PROGRESO': '#3b82f6', 'ENVIADO': '#06b6d4',
-  'ENTREGADO': '#10b981', 'SHORTAGE': '#ef4444', 'BACKORDER': '#8b5cf6',
-};
-const PIE_COLORS = ['#3b82f6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+const BAR_DATA = [
+  { name: 'María L.', count: 420 },
+  { name: 'Carlos R.', count: 380 },
+  { name: 'Ana T.', count: 290 },
+  { name: 'Luis M.', count: 210 },
+  { name: 'Carmen V.', count: 180 },
+];
 
-const STATUS_LABELS = {
-  'PENDIENTE': 'Pendiente', 'EN_PROGRESO': 'En Progreso', 'ENVIADO': 'Enviado',
-  'ENTREGADO': 'Entregado', 'SHORTAGE': 'Shortage', 'BACKORDER': 'Backorder',
-};
-
-const PRIORITY_LABELS = {
-  'BAJA': 'Baja', 'NORMAL': 'Normal', 'ALTA': 'Alta', 'CRITICA': 'Crítica',
-};
+const PIE_DATA = [
+  { name: 'En Proceso', value: 7891, color: '#2E75B6' },
+  { name: 'Completado', value: 848, color: '#1E7E34' },
+  { name: 'Shortage', value: 1203, color: '#E0A800' },
+  { name: 'Backorder', value: 342, color: '#C82333' },
+];
 
 export default function DashboardPage() {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
-    try {
-      const res = await fetch('/api/dashboard');
-      const json = await res.json();
-      setData(json);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 30000);
-    return () => clearInterval(interval);
+    // Simulate network load
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
   }, []);
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', padding: 80 }}><div className="spinner"></div></div>;
-
-  const statusData = (data?.statusBreakdown || []).map(s => ({
-    name: STATUS_LABELS[s.status] || s.status,
-    value: s.count,
-    color: STATUS_COLORS[s.status] || '#64748b',
-  }));
-
-  const priorityData = (data?.priorityBreakdown || []).map(p => ({
-    name: PRIORITY_LABELS[p.priority] || p.priority,
-    value: p.count,
-  }));
+  if (loading) {
+    return <div className="empty-state"><p>Cargando dashboard...</p></div>;
+  }
 
   return (
-    <div>
+    <div className="flex-col gap-4">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Dashboard</h1>
-          <p className="page-subtitle">Resumen de operaciones en tiempo real</p>
+          <h1 className="page-title">Dashboard Principal</h1>
+          <p className="page-subtitle">Resumen general de operaciones y KPIs (Demo Estática)</p>
         </div>
-        <button className="btn btn-secondary btn-sm" onClick={fetchData}>🔄 Actualizar</button>
+        <button className="btn btn-outlined">
+          <span>⬇️</span> Exportar Reporte
+        </button>
       </div>
 
-      <div className="grid-4" style={{ marginBottom: 28 }}>
-        <div className="kpi-card blue">
-          <div className="kpi-value">{data?.totalOrders || 0}</div>
-          <div className="kpi-label">Total Órdenes</div>
-        </div>
-        <div className="kpi-card amber">
-          <div className="kpi-value">{data?.pendingCount || 0}</div>
-          <div className="kpi-label">Pendientes</div>
-        </div>
-        <div className="kpi-card purple" style={{ cursor: 'default' }}>
-          <div className="kpi-value" style={{ background: 'linear-gradient(135deg, #ef4444, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {data?.shortageCount || 0}
+      {/* KPI Cards */}
+      <div className="grid-4">
+        <div className={styles.kpiCard} style={{ borderLeftColor: 'var(--primary-mid)' }}>
+          <div className={styles.kpiInfo}>
+            <span className={styles.kpiLabel}>TOTAL ÓRDENES</span>
+            <span className={styles.kpiValue}>{MOCK_KPIS.total.toLocaleString()}</span>
           </div>
-          <div className="kpi-label">Shortage</div>
+          <div className={styles.kpiIcon} style={{ background: 'var(--primary-light)', color: 'var(--primary-mid)' }}>📊</div>
         </div>
-        <div className="kpi-card green">
-          <div className="kpi-value" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            {data?.backorderCount || 0}
+
+        <div className={styles.kpiCard} style={{ borderLeftColor: 'var(--success)' }}>
+          <div className={styles.kpiInfo}>
+            <span className={styles.kpiLabel}>EN PROCESO</span>
+            <span className={styles.kpiValue}>{MOCK_KPIS.enProceso.toLocaleString()}</span>
           </div>
-          <div className="kpi-label">Backorder</div>
+          <div className={styles.kpiIcon} style={{ background: '#D4EDDA', color: 'var(--success)' }}>🔄</div>
+        </div>
+
+        <div className={styles.kpiCard} style={{ borderLeftColor: 'var(--warning)' }}>
+          <div className={styles.kpiInfo}>
+            <span className={styles.kpiLabel}>SHORTAGES</span>
+            <span className={styles.kpiValue}>{MOCK_KPIS.shortage.toLocaleString()}</span>
+          </div>
+          <div className={styles.kpiIcon} style={{ background: '#FFF3CD', color: 'var(--warning)' }}>⚠️</div>
+        </div>
+
+        <div className={styles.kpiCard} style={{ borderLeftColor: 'var(--danger)' }}>
+          <div className={styles.kpiInfo}>
+            <span className={styles.kpiLabel}>BACKORDERS</span>
+            <span className={styles.kpiValue}>{MOCK_KPIS.backorder.toLocaleString()}</span>
+          </div>
+          <div className={styles.kpiIcon} style={{ background: '#FFDAD9', color: 'var(--danger)' }}>🚨</div>
         </div>
       </div>
 
-      <div className="grid-2" style={{ marginBottom: 28 }}>
-        <div className="glass-card">
-          <h3 className={styles.chartTitle}>Órdenes por Estado</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={statusData}>
-              <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 12 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: '#94a3b8', fontSize: 12 }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ background: '#1a2035', border: '1px solid rgba(148,163,184,0.1)', borderRadius: 10, color: '#f1f5f9' }} />
-              <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-                {statusData.map((entry, i) => (
-                  <Cell key={i} fill={entry.color} />
-                ))}
-              </Bar>
+      {/* Charts */}
+      <div className="grid-2">
+        <div className="card">
+          <h3 style={{ marginBottom: '16px' }}>Productividad por Responsable</h3>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={BAR_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#6C757D' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 12, fill: '#6C757D' }} axisLine={false} tickLine={false} />
+              <Tooltip cursor={{ fill: '#F4F6F9' }} contentStyle={{ borderRadius: '8px', border: '1px solid #DEE2E6' }} />
+              <Bar dataKey="count" fill="var(--primary-mid)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="glass-card">
-          <h3 className={styles.chartTitle}>Distribución por Responsable</h3>
-          <ResponsiveContainer width="100%" height={280}>
+        <div className="card">
+          <h3 style={{ marginBottom: '16px' }}>Distribución de Estados</h3>
+          <ResponsiveContainer width="100%" height={260}>
             <PieChart>
-              <Pie data={data?.distribution || []} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={100} innerRadius={55} paddingAngle={3} label={({ name, count }) => `${name} (${count})`}>
-                {(data?.distribution || []).map((_, i) => (
-                  <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
+              <Pie data={PIE_DATA} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={2} dataKey="value">
+                {PIE_DATA.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ background: '#1a2035', border: '1px solid rgba(148,163,184,0.1)', borderRadius: 10, color: '#f1f5f9' }} />
+              <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #DEE2E6' }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      <div className="glass-card">
-        <h3 className={styles.chartTitle}>
-          🔴 Órdenes Críticas
-          <span className="badge badge-red" style={{ marginLeft: 8 }}>{data?.criticalOrders?.length || 0}</span>
-        </h3>
-        <table className="data-table">
+      {/* Recent Orders */}
+      <div className="card">
+        <h3 style={{ marginBottom: '16px' }}>Órdenes Recientes</h3>
+        <table className="corp-table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th><input type="checkbox" /></th>
+              <th>ID Orden</th>
               <th>Cliente</th>
-              <th>Producto</th>
-              <th>Prioridad</th>
-              <th>Estado</th>
               <th>Responsable</th>
+              <th>F. Ingreso</th>
+              <th>F. Entrega</th>
+              <th>Estado</th>
             </tr>
           </thead>
           <tbody>
-            {(data?.criticalOrders || []).map(order => (
-              <tr key={order.id}>
-                <td><span style={{ fontFamily: 'monospace', color: 'var(--accent-cyan)' }}>{order.externalId}</span></td>
-                <td>{order.customer}</td>
-                <td>{order.product}</td>
+            {MOCK_ORDERS.map((order, idx) => (
+              <tr key={idx}>
+                <td><input type="checkbox" /></td>
+                <td><strong>{order.id}</strong></td>
+                <td>{order.client}</td>
+                <td>{order.owner}</td>
+                <td>{order.entryDate}</td>
+                <td>{order.deliveryDate}</td>
                 <td>
-                  <span className={`badge ${order.priority === 'CRITICA' ? 'badge-red' : 'badge-amber'}`}>
-                    {PRIORITY_LABELS[order.priority] || order.priority}
+                  <span className={`badge ${
+                    order.status === 'Completado' ? 'badge-green' :
+                    order.status === 'En Proceso' ? 'badge-blue' :
+                    order.status === 'Shortage' ? 'badge-amber' :
+                    order.status === 'Backorder' ? 'badge-red' : 'badge-gray'
+                  }`}>
+                    {order.status}
                   </span>
                 </td>
-                <td>
-                  <span className={`badge ${order.status === 'SHORTAGE' ? 'badge-red' : order.status === 'BACKORDER' ? 'badge-purple' : 'badge-blue'}`}>
-                    {STATUS_LABELS[order.status] || order.status}
-                  </span>
-                </td>
-                <td>{order.owner?.name || 'Sin asignar'}</td>
               </tr>
             ))}
-            {(!data?.criticalOrders || data.criticalOrders.length === 0) && (
-              <tr><td colSpan={6} style={{ textAlign: 'center', padding: 24, color: 'var(--text-muted)' }}>Sin órdenes críticas 🎉</td></tr>
-            )}
           </tbody>
         </table>
       </div>

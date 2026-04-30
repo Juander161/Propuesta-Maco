@@ -1,13 +1,14 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/AuthContext';
 import Sidebar from '@/components/layout/Sidebar';
 import Navbar from '@/components/layout/Navbar';
 
 export default function AppLayout({ children }) {
-  const { user, loading, logout } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) router.replace('/login');
@@ -15,23 +16,18 @@ export default function AppLayout({ children }) {
 
   if (loading || !user) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-        <div className="spinner"></div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg-main)' }}>
+        <div style={{ color: 'var(--primary-mid)', fontWeight: '600' }}>Cargando sistema...</div>
       </div>
     );
   }
 
-  const handleLogout = () => {
-    logout();
-    router.replace('/login');
-  };
-
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Sidebar user={user} />
-      <div style={{ flex: 1, marginLeft: 'var(--sidebar-width)', transition: 'margin 0.25s ease' }}>
-        <Navbar user={user} onLogout={handleLogout} />
-        <main style={{ padding: '28px 32px', minHeight: 'calc(100vh - var(--navbar-height))' }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <Sidebar user={user} collapsed={collapsed} />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+        <Navbar user={user} toggleSidebar={() => setCollapsed(!collapsed)} />
+        <main style={{ flex: 1, overflowY: 'auto', padding: '24px', background: 'var(--bg-main)' }}>
           {children}
         </main>
       </div>
